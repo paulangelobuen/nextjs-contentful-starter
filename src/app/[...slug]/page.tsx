@@ -1,16 +1,20 @@
 import { notFound } from 'next/navigation';
-import { Hero } from '../components/Hero.jsx';
-import { Stats } from '../components/Stats.jsx';
-import { getPageFromSlug } from '../utils/content.js';
+import { Hero } from '../../components/Hero';
+import { Stats } from '../../components/Stats';
+import { getPageFromSlug } from '../../utils/content';
 
 const componentMap = {
   hero: Hero,
   stats: Stats,
 };
 
-export default async function ComposablePage() {
+export default async function ComposablePage({ params }) {
+  const { slug } = params;
+  
+  const pageSlug = slug.join('/');
+
   try {
-    const page = await getPageFromSlug("/");
+    const page = await getPageFromSlug(`/${pageSlug}`);
 
     if (!page) {
       return notFound();
