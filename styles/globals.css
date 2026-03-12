@@ -1,1 +1,12 @@
 @import 'tailwindcss';
+
+.toggleOn {
+  background-color: #34D399; /* Tailwind's green-400 */
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.toggleOff {
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}

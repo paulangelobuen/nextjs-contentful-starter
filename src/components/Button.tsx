@@ -1,11 +1,18 @@
 import Link from 'next/link';
 
+type ButtonProps = {
+  id?: string;
+  theme?: 'primary' | 'dark' | string;
+  url?: string;
+  label?: string;
+};
+
 const themeClassMap = {
   default: 'border-purple-700 bg-purple-700 text-white hover:bg-purple-500 hover:border-purple-500',
   outline: 'border-purple-700 bg-transparent text-purple-700 hover:text-purple-500 hover:border-purple-500',
 };
 
-export const Button = (props) => {
+export const Button = (props: ButtonProps) => {
   return (
     <Link
       href={props.url}

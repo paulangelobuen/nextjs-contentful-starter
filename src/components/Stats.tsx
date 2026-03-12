@@ -1,14 +1,29 @@
 import Markdown from 'markdown-to-jsx';
+import React from 'react';
 
-const themeClassMap = {
+type Stat = {
+  id?: string;
+  value?: React.ReactNode;
+  label?: React.ReactNode;
+};
+
+type StatsProps = {
+  id?: string;
+  theme?: 'primary' | 'dark' | string;
+  heading?: React.ReactNode;
+  body?: string;
+  stats?: Stat[];
+};
+
+const themeClassMap: Record<string, string> = {
   primary: 'bg-purple-700 text-white',
   dark: 'bg-gray-800 text-white',
 };
 
-export const Stats = (props) => {
+export const Stats = (props: StatsProps) => {
   return (
     <div
-      className={`px-6 py-16 text-center ${themeClassMap[props.theme] ?? themeClassMap['primary']} sm:px-12 sm:py-24`}
+      className={`px-6 py-16 text-center ${themeClassMap[props.theme ?? 'primary']} sm:px-12 sm:py-24`}
       data-sb-object-id={props.id}
     >
       <div className="mx-auto">
@@ -16,19 +31,23 @@ export const Stats = (props) => {
           <h2 className="mb-4 text-4xl font-bold sm:text-5xl" data-sb-field-path="heading">
             {props.heading}
           </h2>
-          {props.body && <Markdown options={{ forceBlock: true }} className="sm:text-lg" data-sb-field-path="body">
-            {props.body}
-          </Markdown>}
+          {props.body && (
+            <Markdown options={{ forceBlock: true }} className="sm:text-lg" data-sb-field-path="body">
+              {props.body}
+            </Markdown>
+          )}
         </div>
         <div className="grid max-w-3xl gap-12 mx-auto sm:grid-cols-3">
-          {(props.stats || []).map((stat, idx) => <StatItem key={idx} {...stat} />)}
+          {(props.stats || []).map((stat, idx) => (
+            <StatItem key={stat.id ?? idx} {...stat} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-const StatItem = (props) => {
+const StatItem = (props: Stat) => {
   return (
     <div data-sb-object-id={props.id}>
       <div className="mb-3 text-4xl font-bold sm:text-5xl" data-sb-field-path="value">
